@@ -22,6 +22,10 @@ service = BankService()
 async def create_account(data: accountIn):
     return await service.create_account(data)
 
+@router.delete("/delete_account/{account_id}", status_code=status.HTTP_200_OK)
+async def delete_account(account_id:int):
+    return await service.delete_account(account_id)
+
 @router.get("/read_accounts", response_model=list[accountOut])
 async def read_accounts(limit: int, skip: int = 0):
     return await service.read_accounts(limit, skip)
@@ -33,6 +37,10 @@ async def read_account_by_id(account_id: int):
 @router.post("/create_transaction/{account_id}", status_code=status.HTTP_201_CREATED, response_model=transactionOut)
 async def create_transaction(account_id: int, data: transactionIn):
     return await service.create_transaction(account_id, data)
+
+@router.delete("/delete_last_transaction/{account_id}", status_code=status.HTTP_200_OK)
+async def delete_last_transaction(account_id:int):
+    return await service.delete_last_transaction(account_id)
 
 @router.get("/read_transactions/{account_id}", response_model=list[transactionOut])
 async def read_transactions(account_id: int):
